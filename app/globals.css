@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold-primary: #C9A227;
+  --gold-light: #E5BC2A;
+  --gold-dark: #A68521;
+  --burgundy: #8B2323;
+  --burgundy-dark: #4A1414;
+  --dark-bg: #0A0A0A;
+  --dark-surface: #1A1A1A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background-color: var(--dark-bg);
+  color: #F5F5F5;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Text Selection */
+::selection {
+  background: var(--gold-primary);
+  color: var(--dark-bg);
+}
+
+/* Gold Text Gradient */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #E5BC2A 0%, #C9A227 50%, #A68521 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold Border Gradient */
+.border-gold-gradient {
+  border-image: linear-gradient(135deg, #E5BC2A 0%, #C9A227 50%, #A68521 100%) 1;
+}
+
+/* Shimmer Effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201, 162, 39, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Glow Effect */
+.glow-gold {
+  box-shadow: 0 0 30px rgba(201, 162, 39, 0.3),
+              0 0 60px rgba(201, 162, 39, 0.1);
+}
+
+.glow-gold-strong {
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.5),
+              0 0 80px rgba(201, 162, 39, 0.2);
+}
+
+/* Floating Animation */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Pulse Glow */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 162, 39, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(201, 162, 39, 0.6); }
+}
+
+/* Background Patterns */
+.bg-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(201, 162, 39, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(139, 35, 35, 0.03) 0%, transparent 50%);
+}
+
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Decorative Lines */
+.line-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.line-gold-vertical {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--gold-primary), transparent);
+}
+
+/* Button Styles */
+.btn-gold {
+  background: linear-gradient(135deg, #C9A227 0%, #E5BC2A 50%, #A68521 100%);
+  color: #0A0A0A;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-gold:hover::before {
+  left: 100%;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(201, 162, 39, 0.4);
+}
+
+/* Card Styles */
+.card-dark {
+  background: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
+  border: 1px solid rgba(201, 162, 39, 0.1);
+  border-radius: 8px;
+}
+
+.card-dark:hover {
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+/* Section Divider */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 162, 39, 0.3) 50%, transparent 100%);
+}
+
+.section-divider::before {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gold-primary);
+  font-size: 1rem;
+  background: var(--dark-bg);
+  padding: 0 1rem;
+}
+
+/* Responsive Typography */
+@layer utilities {
+  .text-responsive-xl {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+  }
+  
+  .text-responsive-lg {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+  
+  .text-responsive-md {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+}
