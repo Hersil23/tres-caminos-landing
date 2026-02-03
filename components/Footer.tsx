@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/language-context'
-import { Instagram, Mail, Globe, Phone, Heart } from 'lucide-react'
+import { Instagram, Mail, Globe, Phone } from 'lucide-react'
 
 export default function Footer() {
   const { t } = useLanguage()
@@ -115,16 +115,14 @@ export default function Footer() {
             </p>
             
             <div className="flex items-center gap-2 text-gray-600">
-              <span className="font-body text-sm">Creado con</span>
-              <Heart className="w-4 h-4 text-burgundy-500 fill-current" />
-              <span className="font-body text-sm">por</span>
+              <span className="font-body text-sm">Creado por</span>
               <a 
                 href="https://herasi.dev" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="font-accent text-gold-500 hover:text-gold-400 transition-colors"
               >
-                @herasi.dev
+                www.herasi.dev
               </a>
             </div>
           </div>
