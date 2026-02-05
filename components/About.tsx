@@ -143,7 +143,7 @@ export default function About() {
                   <div className="font-display text-4xl md:text-5xl font-bold text-gold-500 mb-2">
                     <Counter target={stat.number} inView={isInView} />
                   </div>
-                  <div className="font-accent text-xs md:text-sm text-gray-400 tracking-wider uppercase">
+                  <div className="font-accent text-[10px] sm:text-xs md:text-sm text-gray-400 tracking-normal sm:tracking-wider uppercase">
                     {stat.label}
                   </div>
                 </motion.div>
