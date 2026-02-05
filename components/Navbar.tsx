@@ -50,7 +50,7 @@ export default function Navbar() {
               alt="Alimento a tu Espíritu"
               width={50}
               height={50}
-              className="h-12 w-auto transition-transform hover:scale-105"
+              className="h-20 w-auto transition-transform hover:scale-105"
             />
           </a>
 
