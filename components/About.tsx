@@ -132,13 +132,13 @@ export default function About() {
             {/* Stats */}
             <motion.div
               variants={containerVariants}
-              className="grid grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"
             >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="text-center p-6 bg-gold-500/5 border border-gold-500/10 rounded-lg card-hover"
+                  className="text-center p-4 sm:p-6 bg-gold-500/5 border border-gold-500/10 rounded-lg card-hover"
                 >
                   <div className="font-display text-4xl md:text-5xl font-bold text-gold-500 mb-2">
                     <Counter target={stat.number} inView={isInView} />
