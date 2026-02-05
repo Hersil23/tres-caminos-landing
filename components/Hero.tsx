@@ -2,216 +2,130 @@
 
 import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/language-context'
-import { ChevronDown, BookOpen, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Hero() {
   const { t } = useLanguage()
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
-    },
-  }
-
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-dark-600">
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-600 via-dark-500/50 to-dark-600" />
-        
-        {/* Radial Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gold-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-burgundy-500/5 rounded-full blur-3xl" />
-        
-        {/* Grain Texture */}
-        <div className="absolute inset-0 bg-grain opacity-50" />
-        
-        {/* Animated Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gold-500/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+    <section id="hero" className="section-full relative overflow-hidden bg-gradient-to-b from-dark-800 via-dark-700 to-dark-600">
+      {/* Background grain */}
+      <div className="absolute inset-0 bg-grain" />
+      
+      {/* Radial gradient overlay */}
+      <div className="absolute inset-0 bg-radial-gradient opacity-50" 
+        style={{ background: 'radial-gradient(ellipse at center, rgba(35,29,23,0.8) 0%, rgba(15,12,9,1) 70%)' }} 
+      />
 
-      {/* Content */}
+      {/* Decorative elements */}
+      <div className="absolute top-1/4 left-10 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-burgundy-500/5 rounded-full blur-3xl" />
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
-        >
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
           {/* Text Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1">
-            {/* Ministry Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-6">
-              <Sparkles className="w-4 h-4 text-gold-500" />
-              <span className="font-body text-gold-500 tracking-widest text-sm uppercase">
-                Alimento a tu Espíritu
-              </span>
-              <Sparkles className="w-4 h-4 text-gold-500" />
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center lg:text-left order-2 lg:order-1"
+          >
+            {/* Title Image */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-8"
+            >
+              <Image
+                src="/images/titulo-dorado.png"
+                alt="Tres Caminos Un Solo Dios"
+                width={600}
+                height={200}
+                className="w-full max-w-lg mx-auto lg:mx-0 animate-shimmer"
+                style={{ filter: 'drop-shadow(0 10px 30px rgba(236, 213, 110, 0.3))' }}
+              />
             </motion.div>
 
-            {/* Title */}
-            <motion.h1
-              variants={itemVariants}
-              className="font-display text-responsive-xl font-bold leading-tight mb-6"
-            >
-              <span className="text-gold-gradient">Tres Caminos</span>
-              <br />
-              <span className="text-white">Un Solo Dios</span>
-            </motion.h1>
-
             {/* Verse */}
-            <motion.div variants={itemVariants} className="mb-8">
-              <p className="font-display italic text-2xl sm:text-3xl text-gray-300 mb-2">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mb-6"
+            >
+              <p className="font-body text-xl md:text-2xl italic text-gray-400 mb-2 pl-4 border-l-2 border-gold-500">
                 {t('hero.verse')}
               </p>
-              <p className="font-accent text-gold-500 tracking-wider">
+              <p className="font-accent text-sm tracking-widest text-gold-500 pl-4">
                 {t('hero.verseRef')}
               </p>
             </motion.div>
 
-            {/* Subtitle */}
+            {/* Author */}
             <motion.p
-              variants={itemVariants}
-              className="font-body text-xl text-gray-400 mb-10 max-w-lg mx-auto lg:mx-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="font-accent text-lg tracking-widest text-gray-300 mb-8"
             >
-              {t('hero.subtitle')}
+              {t('hero.author')}
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* CTA Button */}
             <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <motion.a
-                href="https://www.amazon.com"
+              <a
+                href="https://www.amazon.com/dp/B0DRY9YN2L"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-gold font-accent tracking-wider text-lg flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-block px-10 py-4 bg-gradient-to-r from-gold-500 to-gold-600 text-dark-800 font-accent font-bold text-sm tracking-widest uppercase rounded glow-gold hover:scale-105 transition-transform"
               >
-                <BookOpen className="w-5 h-5" />
                 {t('hero.cta')}
-              </motion.a>
-              
-              <motion.a
-                href="https://heyzine.com/flip-book/cf3389a748.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 border border-gold-500/30 rounded font-accent tracking-wider text-gold-500 hover:bg-gold-500/10 transition-all duration-300 flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05, borderColor: 'rgba(201, 162, 39, 0.6)' }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {t('hero.preview')}
-              </motion.a>
-            </motion.div>
-
-            {/* Available Badge */}
-            <motion.div
-              variants={itemVariants}
-              className="mt-10 flex items-center gap-4 justify-center lg:justify-start"
-            >
-              <span className="font-body text-gray-500 text-sm">{t('hero.available')}</span>
-              <div className="flex items-center gap-2 px-4 py-2 bg-dark-400/50 rounded-full border border-gold-500/20">
-                <svg className="w-20 h-6" viewBox="0 0 100 30" fill="none">
-                  <text x="5" y="22" className="fill-[#FF9900] font-bold text-lg" style={{ fontFamily: 'Arial' }}>
-                    amazon
-                  </text>
-                </svg>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Book Image */}
-          <motion.div
-            variants={itemVariants}
-            className="relative order-1 lg:order-2 flex justify-center"
-          >
-            {/* Glow Effect Behind Book */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-80 h-80 bg-gold-500/10 rounded-full blur-3xl animate-pulse" />
-            </div>
-            
-            {/* Book Container */}
-            <motion.div
-              className="relative"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              {/* Book Shadow */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-64 h-8 bg-black/40 rounded-full blur-xl" />
-              
-              {/* Book Image */}
-              <div className="relative w-72 sm:w-80 lg:w-96 aspect-[3/4] glow-gold rounded-lg overflow-hidden">
-                <Image
-                  src="/images/book-flyer.jpeg"
-                  alt="Tres Caminos Un Solo Dios - Portada del libro"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-
-              {/* Decorative Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-gold-500/50"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-gold-500/50"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-              />
+              </a>
             </motion.div>
           </motion.div>
-        </motion.div>
+
+          {/* Book Mockup */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex justify-center items-center order-1 lg:order-2"
+          >
+            <div className="relative">
+              <Image
+                src="/images/mockup-libro.png"
+                alt="Libro Tres Caminos Un Solo Dios"
+                width={450}
+                height={550}
+                className="w-full max-w-sm lg:max-w-md animate-float"
+                style={{ filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.6))' }}
+              />
+              {/* Glow effect behind book */}
+              <div className="absolute inset-0 -z-10 bg-gold-500/10 blur-3xl rounded-full scale-75" />
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll indicator */}
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
       >
-        <a href="#about" className="flex flex-col items-center gap-2 text-gold-500/50 hover:text-gold-500 transition-colors">
-          <span className="font-body text-xs tracking-wider uppercase">Scroll</span>
-          <ChevronDown className="w-5 h-5" />
-        </a>
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="w-6 h-10 border-2 border-gold-500/50 rounded-full flex justify-center"
+        >
+          <motion.div className="w-1.5 h-3 bg-gold-500 rounded-full mt-2" />
+        </motion.div>
       </motion.div>
     </section>
   )

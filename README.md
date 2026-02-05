@@ -4,36 +4,33 @@ Landing page moderna y elegante para el libro devocional "Tres Caminos Un Solo D
 
 ## Características
 
-- 🌐 **Bilingüe**: Soporte completo para español e inglés
-- ✨ **Animaciones**: Transiciones suaves con Framer Motion
-- 📱 **Responsive**: Diseño adaptable a todos los dispositivos
-- 🎨 **Diseño Premium**: Estética elegante con colores dorado, negro y burgundy
-- ⚡ **Rendimiento**: Optimizado con Next.js 14
-- 🚀 **Listo para Vercel**: Deploy con un click
+- Bilingüe (Español/Inglés) con botón de cambio de idioma
+- Animaciones elegantes con Framer Motion
+- Diseño responsive (móvil, tablet, desktop)
+- Cada sección ocupa 100% de la altura de pantalla
+- Paleta de colores: Negro, Dorado (#ecd56e), Burgundy
+- Optimizado para Vercel
 
 ## Secciones
 
-1. **Hero** - Presentación del libro con animaciones
-2. **Acerca del Libro** - Descripción y estadísticas
-3. **Los Tres Caminos** - Los Predestinados, Libre Albedrío, Hijos de Desobediencia
-4. **El Autor** - Información de Angel Morel
-5. **CTA** - Llamada a la acción para comprar
-6. **Footer** - Contacto y redes sociales
+1. **Hero** - Mockup del libro con título dorado
+2. **El Libro** - Estadísticas animadas (173 páginas, 70 devocionales, 70 oraciones)
+3. **Los Tres Caminos** - Tarjetas interactivas (Predestinados, Libre Albedrío, Desobediencia)
+4. **El Autor** - Logo grande del ministerio + info
+5. **CTA** - Llamada a la acción para comprar en Amazon
+6. **Footer** - Logo mediano + "Creado por www.herasi.dev"
 
 ## Tecnologías
 
-- **Next.js 14** - Framework React
-- **TypeScript** - Tipado estático
-- **Tailwind CSS** - Estilos utilitarios
-- **Framer Motion** - Animaciones
-- **Lucide React** - Iconos
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 
 ## Instalación
 
 ```bash
-# Clonar el repositorio
-git clone <tu-repo>
-
 # Instalar dependencias
 npm install
 
@@ -51,60 +48,46 @@ npm run build
 3. Importa tu repositorio
 4. Deploy automático
 
-O usa el CLI de Vercel:
-
-```bash
-npm i -g vercel
-vercel
-```
-
-## Estructura del Proyecto
+## Estructura
 
 ```
 tres-caminos-landing/
 ├── app/
-│   ├── globals.css      # Estilos globales
-│   ├── layout.tsx       # Layout principal
-│   └── page.tsx         # Página principal
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
-│   ├── Navbar.tsx       # Navegación
-│   ├── Hero.tsx         # Sección hero
-│   ├── About.tsx        # Acerca del libro
-│   ├── Paths.tsx        # Los tres caminos
-│   ├── Author.tsx       # Información del autor
-│   ├── CTA.tsx          # Llamada a la acción
-│   └── Footer.tsx       # Pie de página
+│   ├── Navbar.tsx
+│   ├── Hero.tsx
+│   ├── About.tsx
+│   ├── Paths.tsx
+│   ├── Author.tsx
+│   ├── CTA.tsx
+│   └── Footer.tsx
 ├── lib/
-│   └── language-context.tsx  # Contexto de idiomas
+│   └── language-context.tsx
 ├── public/
-│   └── images/          # Imágenes del libro
+│   └── images/
+│       ├── mockup-libro.png
+│       ├── titulo-dorado.png
+│       ├── libro-abierto.png
+│       └── logo-ministerio.png
 └── ...config files
 ```
 
-## Personalización
+## Imágenes requeridas
 
-### Colores
-Los colores principales se pueden modificar en `tailwind.config.ts`:
-- `gold` - Dorado principal
-- `burgundy` - Rojo vino
-- `dark` - Tonos oscuros
-
-### Traducciones
-Todas las traducciones están en `lib/language-context.tsx`
-
-### Imágenes
-Reemplaza las imágenes en `public/images/`:
-- `book-flyer.jpeg` - Portada principal
-- `hero-banner.jpeg` - Banner del hero
-- `author-card.jpeg` - Tarjeta del autor
+- `mockup-libro.png` - Mockup del libro sin fondo
+- `titulo-dorado.png` - Título dorado PNG
+- `libro-abierto.png` - Imagen del libro abierto (devocional David)
+- `logo-ministerio.png` - Logo de Alimento a tu Espíritu
 
 ## Contacto
 
 - **Autor del libro**: Angel Morel
 - **Ministerio**: Alimento a tu Espíritu
 - **Web**: www.AlimentoATuEspiritu.org
-- **Instagram**: @alimentoatuespiritu
 
 ---
 
-Desarrollado con ❤️ por [@herasi.dev](https://herasi.dev)
+Creado por [www.herasi.dev](https://herasi.dev)

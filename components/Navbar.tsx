@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '@/lib/language-context'
 import { Menu, X, Globe } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage()
@@ -18,99 +19,83 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es')
-  }
-
   const navLinks = [
-    { href: '#home', label: t('nav.home') },
-    { href: '#about', label: t('nav.about') },
+    { href: '#hero', label: t('nav.home') },
+    { href: '#about', label: t('nav.book') },
     { href: '#paths', label: t('nav.paths') },
     { href: '#author', label: t('nav.author') },
   ]
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'es' ? 'en' : 'es')
+  }
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-dark-600/95 backdrop-blur-md shadow-lg shadow-black/20' 
-          : 'bg-transparent'
+          ? 'bg-dark-800/95 backdrop-blur-md shadow-lg shadow-black/20' 
+          : 'bg-gradient-to-b from-dark-800/80 to-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <motion.a
-            href="#home"
-            className="flex items-center gap-3"
-            whileHover={{ scale: 1.02 }}
-          >
-            <span className="font-accent text-gold-500 text-lg tracking-wider">
-              TRES CAMINOS
-            </span>
-          </motion.a>
+          {/* Logo pequeño */}
+          <a href="#hero" className="flex items-center">
+            <Image
+              src="/images/logo-ministerio.png"
+              alt="Alimento a tu Espíritu"
+              width={50}
+              height={50}
+              className="h-12 w-auto transition-transform hover:scale-105"
+            />
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <motion.a
+            {navLinks.map((link) => (
+              <a
                 key={link.href}
                 href={link.href}
-                className="relative font-body text-gray-300 hover:text-gold-500 transition-colors duration-300 text-lg"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -2 }}
+                className="font-accent text-sm tracking-widest uppercase text-gray-300 hover:text-gold-500 transition-colors relative group"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold-500 transition-all duration-300 group-hover:w-full hover:w-full" />
-              </motion.a>
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold-500 transition-all duration-300 group-hover:w-full" />
+              </a>
             ))}
-            
+
             {/* Language Toggle */}
-            <motion.button
+            <button
               onClick={toggleLanguage}
-              className="flex items-center gap-2 px-3 py-1.5 border border-gold-500/30 rounded-full hover:border-gold-500 transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold-500/30 text-gold-500 hover:bg-gold-500/10 transition-all"
             >
-              <Globe className="w-4 h-4 text-gold-500" />
-              <span className="font-body text-sm text-gold-500">{t('lang.switch')}</span>
-            </motion.button>
+              <Globe className="w-4 h-4" />
+              <span className="text-sm font-accent tracking-wider">
+                {language.toUpperCase()}
+              </span>
+            </button>
 
             {/* CTA Button */}
-            <motion.a
-              href="https://www.amazon.com"
+            <a
+              href="https://www.amazon.com/dp/B0DRY9YN2L"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gold font-accent text-sm tracking-wider"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-dark-800 font-accent font-semibold text-sm tracking-wider uppercase rounded hover:shadow-lg hover:shadow-gold-500/30 transition-all"
             >
               {t('nav.buy')}
-            </motion.a>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-1 px-2 py-1 border border-gold-500/30 rounded-full"
-            >
-              <Globe className="w-4 h-4 text-gold-500" />
-              <span className="text-xs text-gold-500">{t('lang.switch')}</span>
-            </button>
-            
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gold-500 p-2"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-gold-500"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
 
@@ -121,33 +106,40 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-600/98 backdrop-blur-lg border-t border-gold-500/10"
+            className="md:hidden bg-dark-800/98 backdrop-blur-md border-t border-gold-500/10"
           >
             <div className="px-4 py-6 space-y-4">
-              {navLinks.map((link, index) => (
-                <motion.a
+              {navLinks.map((link) => (
+                <a
                   key={link.href}
                   href={link.href}
-                  className="block font-body text-gray-300 hover:text-gold-500 transition-colors py-2 text-lg"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="block font-accent text-lg tracking-wider text-gray-300 hover:text-gold-500 transition-colors py-2"
                 >
                   {link.label}
-                </motion.a>
+                </a>
               ))}
-              <motion.a
-                href="https://www.amazon.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block btn-gold text-center font-accent text-sm tracking-wider mt-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                {t('nav.buy')}
-              </motion.a>
+              
+              <div className="flex items-center justify-between pt-4 border-t border-gold-500/10">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/30 text-gold-500"
+                >
+                  <Globe className="w-4 h-4" />
+                  <span className="text-sm font-accent tracking-wider">
+                    {language === 'es' ? 'Español' : 'English'}
+                  </span>
+                </button>
+
+                <a
+                  href="https://www.amazon.com/dp/B0DRY9YN2L"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-dark-800 font-accent font-semibold text-sm tracking-wider uppercase rounded"
+                >
+                  {t('nav.buy')}
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

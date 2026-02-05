@@ -1,10 +1,43 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useEffect, useState, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { useLanguage } from '@/lib/language-context'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { BookOpen, Users, FileText } from 'lucide-react'
+import Image from 'next/image'
+
+interface CounterProps {
+  target: number
+  duration?: number
+  inView: boolean
+}
+
+function Counter({ target, duration = 2000, inView }: CounterProps) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+
+    let startTime: number
+    let animationFrame: number
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      
+      setCount(Math.floor(progress * target))
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate)
+      }
+    }
+
+    animationFrame = requestAnimationFrame(animate)
+
+    return () => cancelAnimationFrame(animationFrame)
+  }, [target, duration, inView])
+
+  return <span>{count}</span>
+}
 
 export default function About() {
   const { t } = useLanguage()
@@ -12,9 +45,9 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   const stats = [
-    { icon: FileText, value: '173', label: t('about.pages') },
-    { icon: BookOpen, value: '+70', label: t('about.chapters') },
-    { icon: Users, value: '+70', label: t('about.characters') },
+    { number: 173, label: t('about.pages') },
+    { number: 70, label: t('about.devotionals') },
+    { number: 70, label: t('about.prayers') },
   ]
 
   const containerVariants = {
@@ -35,141 +68,82 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="relative py-24 lg:py-32 overflow-hidden" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-600 via-dark-500 to-dark-600" />
-      <div className="absolute inset-0 bg-pattern" />
+    <section id="about" className="section-full relative bg-dark-800 overflow-hidden" ref={ref}>
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent" />
       
-      {/* Decorative Lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/20 to-transparent" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-grain" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-center mb-16"
-        >
-          {/* Section Label */}
-          <motion.div variants={itemVariants} className="mb-4">
-            <span className="inline-block font-accent text-gold-500 tracking-[0.3em] text-sm uppercase border border-gold-500/30 px-4 py-2 rounded-full">
-              {t('about.label')}
-            </span>
-          </motion.div>
-
-          {/* Title */}
-          <motion.h2
-            variants={itemVariants}
-            className="font-display text-responsive-lg font-bold text-white mb-6"
-          >
-            {t('about.title')}
-          </motion.h2>
-
-          {/* Decorative Divider */}
-          <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 mb-8">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-gold-500/50" />
-            <div className="w-2 h-2 bg-gold-500 rounded-full" />
-            <div className="w-16 h-px bg-gradient-to-l from-transparent to-gold-500/50" />
-          </motion.div>
-        </motion.div>
-
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image/Visual Side */}
+          {/* Image - Libro abierto */}
           <motion.div
             variants={itemVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             className="relative"
           >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Decorative Frame */}
-              <div className="absolute inset-4 border border-gold-500/20 rounded-lg" />
-              <div className="absolute inset-8 border border-gold-500/10 rounded-lg" />
-              
-              {/* Center Icon */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="w-32 h-32 bg-gradient-to-br from-gold-500/20 to-burgundy-500/20 rounded-full flex items-center justify-center"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <BookOpen className="w-16 h-16 text-gold-500" />
-                </motion.div>
-              </div>
-
-              {/* Orbiting Elements */}
-              {['Predestinados', 'Libre Albedrío', 'Desobediencia'].map((path, index) => (
-                <motion.div
-                  key={path}
-                  className="absolute"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                  }}
-                  animate={{
-                    rotate: 360,
-                  }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: 'linear',
-                    delay: index * (20 / 3),
-                  }}
-                >
-                  <div
-                    className="absolute w-3 h-3 bg-gold-500/50 rounded-full"
-                    style={{
-                      transform: `translateX(${120 + index * 20}px) translateY(-50%)`,
-                    }}
-                  />
-                </motion.div>
-              ))}
-
-              {/* Corner Decorations */}
-              <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-gold-500/30 rounded-tl-lg" />
-              <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-gold-500/30 rounded-tr-lg" />
-              <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-gold-500/30 rounded-bl-lg" />
-              <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-gold-500/30 rounded-br-lg" />
+            <div className="relative rounded-lg overflow-hidden shadow-2xl shadow-black/50">
+              <Image
+                src="/images/libro-abierto.png"
+                alt="Devocional sobre David"
+                width={600}
+                height={400}
+                className="w-full h-auto"
+              />
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-800/50 to-transparent" />
             </div>
+            {/* Decorative glow */}
+            <div className="absolute -inset-4 bg-gold-500/5 rounded-xl blur-2xl -z-10" />
           </motion.div>
 
-          {/* Text Content */}
+          {/* Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
+            className="text-center lg:text-left"
           >
-            <motion.p
-              variants={itemVariants}
-              className="font-body text-xl text-gray-300 leading-relaxed mb-6"
-            >
-              {t('about.description1')}
-            </motion.p>
+            {/* Label */}
+            <motion.div variants={itemVariants} className="mb-4">
+              <span className="inline-block font-accent text-gold-500 tracking-widest text-sm uppercase border border-gold-500/30 px-4 py-2 rounded-full">
+                {t('about.label')}
+              </span>
+            </motion.div>
 
+            {/* Title */}
+            <motion.h2
+              variants={itemVariants}
+              className="font-display text-responsive-lg font-bold text-white mb-6"
+            >
+              {t('about.title')}
+            </motion.h2>
+
+            {/* Description */}
             <motion.p
               variants={itemVariants}
-              className="font-body text-xl text-gray-400 leading-relaxed mb-10"
+              className="font-body text-xl text-gray-400 leading-relaxed mb-12"
             >
-              {t('about.description2')}
+              {t('about.description')}
             </motion.p>
 
             {/* Stats */}
             <motion.div
-              variants={itemVariants}
+              variants={containerVariants}
               className="grid grid-cols-3 gap-6"
             >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="text-center p-4 bg-dark-400/30 rounded-lg border border-gold-500/10 hover:border-gold-500/30 transition-colors duration-300"
-                  whileHover={{ y: -5 }}
+                  variants={itemVariants}
+                  className="text-center p-6 bg-gold-500/5 border border-gold-500/10 rounded-lg card-hover"
                 >
-                  <stat.icon className="w-6 h-6 text-gold-500 mx-auto mb-2" />
-                  <div className="font-display text-3xl font-bold text-gold-gradient mb-1">
-                    {stat.value}
+                  <div className="font-display text-4xl md:text-5xl font-bold text-gold-500 mb-2">
+                    <Counter target={stat.number} inView={isInView} />
                   </div>
-                  <div className="font-body text-sm text-gray-500">
+                  <div className="font-accent text-sm text-gray-400 tracking-wider uppercase">
                     {stat.label}
                   </div>
                 </motion.div>

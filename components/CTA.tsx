@@ -1,10 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useLanguage } from '@/lib/language-context'
-import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { ShoppingCart, ExternalLink } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { useLanguage } from '@/lib/language-context'
+import { ShoppingCart, Star } from 'lucide-react'
 
 export default function CTA() {
   const { t } = useLanguage()
@@ -20,7 +19,7 @@ export default function CTA() {
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -29,125 +28,80 @@ export default function CTA() {
   }
 
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-600 via-dark-500 to-dark-600" />
+    <section className="section-full relative bg-dark-800 overflow-hidden" ref={ref}>
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent" />
       
-      {/* Decorative Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-burgundy-500/5 rounded-full blur-3xl" />
-      </div>
-      
-      <div className="absolute inset-0 bg-grain opacity-30" />
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-grain" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/5 rounded-full blur-3xl" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           className="text-center"
         >
-          {/* Decorative Top */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center gap-4 mb-8"
-          >
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-gold-500/50" />
-            <div className="w-3 h-3 border border-gold-500/50 rotate-45" />
-            <div className="w-16 h-px bg-gradient-to-l from-transparent to-gold-500/50" />
+          {/* Decorative stars */}
+          <motion.div variants={itemVariants} className="flex justify-center gap-2 mb-6">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 text-gold-500 fill-gold-500" />
+            ))}
           </motion.div>
 
-          {/* Quote */}
-          <motion.blockquote
+          {/* Title */}
+          <motion.h2
             variants={itemVariants}
-            className="font-display italic text-2xl sm:text-3xl text-gray-400 mb-4 max-w-3xl mx-auto"
+            className="font-display text-responsive-lg font-bold text-white mb-4"
           >
-            {t('cta.quote')}
-          </motion.blockquote>
+            {t('cta.title')}
+          </motion.h2>
 
+          {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="font-accent text-gold-500 tracking-wider mb-12"
+            className="font-body text-xl text-gray-400 mb-10"
           >
-            {t('cta.quoteRef')}
+            {t('cta.subtitle')}
           </motion.p>
 
-          {/* Main CTA Content */}
-          <motion.div
-            variants={itemVariants}
-            className="p-8 sm:p-12 bg-gradient-to-b from-dark-400/50 to-dark-500/50 rounded-2xl border border-gold-500/20 backdrop-blur-sm"
-          >
-            <h2 className="font-display text-responsive-md font-bold text-white mb-4">
-              {t('cta.title')}
-            </h2>
-
-            <p className="font-body text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              {t('cta.subtitle')}
-            </p>
-
-            {/* CTA Button */}
-            <motion.a
-              href="https://www.amazon.com"
+          {/* CTA Button */}
+          <motion.div variants={itemVariants}>
+            <a
+              href="https://www.amazon.com/dp/B0DRY9YN2L"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 btn-gold font-accent tracking-wider text-lg px-10 py-5"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 px-12 py-5 bg-gradient-to-r from-gold-500 to-gold-600 text-dark-800 font-accent font-bold text-lg tracking-widest uppercase rounded glow-gold hover:scale-105 transition-transform"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-6 h-6" />
               {t('cta.button')}
-              <ExternalLink className="w-4 h-4" />
-            </motion.a>
-
-            {/* Amazon Badge */}
-            <motion.div
-              variants={itemVariants}
-              className="mt-8 flex items-center justify-center gap-4"
-            >
-              <div className="flex items-center gap-2 px-4 py-2 bg-dark-600/50 rounded-full border border-gold-500/10">
-                <svg className="w-24 h-8" viewBox="0 0 120 40" fill="none">
-                  <text x="10" y="28" className="fill-[#FF9900] font-bold text-xl" style={{ fontFamily: 'Arial' }}>
-                    amazon
-                  </text>
-                </svg>
-              </div>
-            </motion.div>
-
-            {/* Trust Badges */}
-            <motion.div
-              variants={itemVariants}
-              className="mt-8 flex flex-wrap items-center justify-center gap-6 text-gray-500"
-            >
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="font-body text-sm">ISBN: 978-8-9941261-4-1</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                <span className="font-body text-sm">173 Páginas</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <span className="font-body text-sm">Academia Editorial USA</span>
-              </div>
-            </motion.div>
+            </a>
           </motion.div>
 
-          {/* Decorative Bottom */}
+          {/* Trust badges */}
           <motion.div
             variants={itemVariants}
-            className="flex items-center justify-center gap-4 mt-12"
+            className="flex flex-wrap justify-center gap-6 mt-10 text-gray-500"
           >
-            <div className="w-24 h-px bg-gradient-to-r from-transparent to-gold-500/30" />
-            <span className="font-display text-gold-500/50 text-2xl">✦</span>
-            <div className="w-24 h-px bg-gradient-to-l from-transparent to-gold-500/30" />
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V8.26l7-3.89v8.62z"/>
+              </svg>
+              <span className="text-sm">Compra segura</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+              </svg>
+              <span className="text-sm">Envío rápido</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <span className="text-sm">Disponible en Amazon</span>
+            </div>
           </motion.div>
         </motion.div>
       </div>
